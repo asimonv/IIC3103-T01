@@ -5,6 +5,8 @@ import SeasonScreen from "./SeasonScreen";
 const SeriesScreen = () => {
   let match = useRouteMatch();
   const { seriesId } = useParams();
+
+  console.warn(seriesId);
   return (
     <Switch>
       <Route path={`${match.path}/season/:seasonId`}>

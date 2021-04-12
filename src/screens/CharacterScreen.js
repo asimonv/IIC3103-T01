@@ -22,6 +22,7 @@ const CharacterScreen = () => {
   const renderData = () => {
     const {
       img,
+      name,
       nickname,
       portrayed,
       status,
@@ -34,6 +35,7 @@ const CharacterScreen = () => {
     return (
       <div>
         <img height={150} width={150} src={img} alt={`${nickname} img`} />
+        <h5>Name: {name}</h5>
         <h5>Nickname: {nickname}</h5>
         <h5>portrayed: {portrayed}</h5>
         <h5>status: {status}</h5>

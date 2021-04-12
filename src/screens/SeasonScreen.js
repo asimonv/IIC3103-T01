@@ -11,8 +11,11 @@ const SeasonScreen = ({ seriesId }) => {
 
   useEffect(() => {
     (async () => {
-      const seriesName = seriesId === 0 ? "Breaking+Bad" : "Better+Call+Saul";
+      console.warn(seriesId);
+      const seriesName = seriesId === "0" ? "Breaking+Bad" : "Better+Call+Saul";
+      console.warn(seriesName);
       const { data } = await axiosRequest(`episodes?series=${seriesName}`);
+      console.log(data);
       setEpisodes(data.filter(x => x.season === seasonId));
     })();
   }, [seasonId, seriesId]);
