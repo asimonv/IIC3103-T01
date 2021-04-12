@@ -1,13 +1,26 @@
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, Route, Switch, useHistory } from "react-router-dom";
 import axiosRequest from "../services/axiosRequest";
 import CharacterScreen from "./CharacterScreen";
+import SearchScreen from "./SearchScreen";
 import SeriesScreen from "./SeriesScreen";
 
 const HomeScreen = () => {
   const [bcsData, setBcsData] = useState();
   const [bbData, setBbData] = useState();
+  const [name, setName] = useState();
+  const history = useHistory();
+  const handleOnChange = event => {
+    const {
+      target: { value },
+    } = event;
+    setName(value);
+  };
+
+  const handleOnClick = () => {
+    history.push(`/search/${name.replace(" ", "+")}`);
+  };
   useEffect(() => {
     (async () => {
       const { data } = await axiosRequest(`episodes`);
@@ -50,16 +63,28 @@ const HomeScreen = () => {
 
   return (
     <div>
+      <label for="name">Search character</label>
+      <input
+        type="text"
+        name="name"
+        onChange={handleOnChange}
+        value={name}
+      ></input>
+      <button onClick={handleOnClick}>Search</button>
       <h3>Breaking Bad seasons</h3>
       {bbData && renderData(bbData, 0)}
       <h3>Better Call Saul seasons</h3>
       {bcsData && renderData(bcsData, 1)}
+
       <Switch>
         <Route path="/series/:seriesId">
           <SeriesScreen />
         </Route>
         <Route path="/character/:characterName">
           <CharacterScreen />
+        </Route>
+        <Route path="/search/:query">
+          <SearchScreen />
         </Route>
       </Switch>
     </div>
